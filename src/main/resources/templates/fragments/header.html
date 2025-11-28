@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" th:fragment="header">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Nocturne Soul — Blog</title>
+
+    <!-- main css -->
+    <link rel="stylesheet" th:href="@{/css/nocturne.css}" />
+
+    <!-- small icon (optional) -->
+    <link rel="icon" th:href="@{/images/moon-icon.png}" />
+
+    <!-- subtle font from Google (optional if you allow external) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body class="ns-bg">
+<header class="ns-header">
+    <div class="ns-container">
+        <div class="brand">
+            <a th:href="@{/}" class="brand-link">
+                <div class="brand-logo">🌙</div>
+                <div class="brand-text">
+                    <div class="brand-title">Nocturne Soul</div>
+                    <div class="brand-sub">voice of the night</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="ns-nav">
+            <form class="ns-search" th:action="@{/posts/search}" method="get" role="search">
+                <input name="q" type="search" placeholder="Search posts, tags, authors..." aria-label="search" />
+                <button type="submit" class="btn ghost">Search</button>
+            </form>
+
+            <div class="nav-links">
+                <a th:href="@{/}" class="nav-link">Home</a>
+
+                <a th:href="@{/auth/register}" sec:authorize="!isAuthenticated()" class="btn small">Register</a>
+
+                <a th:href="@{/auth/login}" sec:authorize="!isAuthenticated()" class="btn primary">Login</a>
+
+                <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')" class="btn outline">Admin</a>
+
+                <span sec:authorize="isAuthenticated()" class="ns-user">
+          <span class="user-name" th:text="${#authentication.name}">You</span>
+          <form th:action="@{/auth/logout}" method="post" style="display:inline">
+            <button type="submit" class="btn small danger">Logout</button>
+          </form>
+        </span>
+            </div>
+
+            <button class="ns-hamburger" aria-label="menu" onclick="document.body.classList.toggle('ns-open')">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<main class="ns-main ns-container">
+    <!-- header fragment ends — page will continue -->

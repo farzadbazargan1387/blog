@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<article class="post ns-animate-up">
+    <header class="post-header">
+        <h1 th:text="${post.title}" class="post-title">Title</h1>
+        <div class="post-meta">
+            <span th:text="${post.author.fullName}">Author</span>
+            · <time th:text="${#dates.format(post.publishedAt,'dd MMM yyyy')}">date</time>
+        </div>
+    </header>
+
+    <section class="post-content" th:utext="${post.content}">
+        <!-- post HTML content -->
+    </section>
+
+    <section class="comments ns-animate-up">
+        <h3>Comments</h3>
+        <div th:each="c : ${comments}" class="comment">
+            <div class="comment-meta"><strong th:text="${c.authorName}">Name</strong> • <span th:text="${#dates.format(c.createdAt,'dd MMM yyyy')}">date</span></div>
+            <p th:text="${c.content}">Comment text</p>
+        </div>
+
+        <form th:action="@{/posts/{slug}/comments(slug=${post.slug})}" method="post" class="comment-form">
+            <input name="authorName" placeholder="Your name" required />
+            <input name="authorEmail" type="email" placeholder="Your email" required />
+            <textarea name="content" placeholder="Write your comment..." required></textarea>
+            <button class="btn primary" type="submit">Submit comment</button>
+        </form>
+    </section>
+</article>
+
+<div th:replace="fragments/footer :: footer"></div>
+</html>

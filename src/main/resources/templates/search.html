@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<section class="ns-animate-up">
+    <h1>Search results for "<span th:text="${q}">query</span>"</h1>
+    <div th:if="${posts.content.size() == 0}" class="muted">No results found.</div>
+
+    <div class="posts-grid" th:each="p : ${posts.content}">
+        <article class="card">
+            <a th:href="@{/posts/{slug}(slug=${p.slug})}">
+                <h3 th:text="${p.title}">Title</h3>
+                <p th:text="${p.excerpt}">Excerpt</p>
+            </a>
+        </article>
+    </div>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<section class="hero ns-animate-up">
+    <h1 class="hero-title">Nocturne Soul — the voice of the night</h1>
+    <p class="hero-sub">Stories about faith, fashion, pain and purpose. Wear your heart on a sleeve.</p>
+</section>
+
+<section class="posts-grid ns-animate-up">
+    <div th:each="p : ${posts.content}">
+        <article class="card">
+            <a th:href="@{/posts/{slug}(slug=${p.slug})}" class="card-link">
+                <h2 class="card-title" th:text="${p.title}">Post Title</h2>
+                <p class="card-excerpt" th:text="${p.excerpt}">Post excerpt goes here — short and electric.</p>
+            </a>
+            <div class="card-meta">
+                <span th:text="${p.author.fullName}">Author</span> · <time th:text="${#dates.format(p.publishedAt, 'dd MMM yyyy')}">date</time>
+            </div>
+        </article>
+    </div>
+</section>
+
+<aside class="sidebar ns-animate-left">
+    <div class="widget">
+        <h3>Categories</h3>
+        <ul>
+            <li th:each="c : ${categories}"><a th:href="@{'/categories/' + ${c.slug}}" th:text="${c.name}">Cat</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3>Tags</h3>
+        <div class="tag-cloud">
+            <a th:each="t : ${tags}" th:href="@{'/tags/' + ${t.slug}}" th:text="${t.name}" class="tag">tag</a>
+        </div>
+    </div>
+</aside>
+
+<div th:replace="fragments/footer :: footer"></div>
+</html>

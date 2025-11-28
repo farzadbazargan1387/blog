@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<section class="auth-card ns-animate-up">
+    <h2>Create your account</h2>
+    <form th:action="@{/auth/register}" th:object="${user}" method="post" class="form-grid">
+        <label><span>Username</span><input th:field="*{username}" required /></label>
+        <label><span>Email</span><input th:field="*{email}" type="email" required /></label>
+        <label><span>Full name</span><input th:field="*{fullName}" /></label>
+        <label><span>Password</span><input th:field="*{password}" type="password" required /></label>
+
+        <div class="form-actions">
+            <button class="btn primary" type="submit">Register</button>
+            <a th:href="@{/auth/login}" class="btn ghost">Sign in</a>
+        </div>
+    </form>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+</html>

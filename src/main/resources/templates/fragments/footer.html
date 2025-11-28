@@ -1,0 +1,14 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
+<footer class="ns-footer ns-container">
+    <div>
+        <small>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Nocturne Soul — crafted with faith & grit</small>
+    </div>
+    <div>
+        <small><a th:href="@{/privacy}">Privacy</a> · <a th:href="@{/terms}">Terms</a></small>
+    </div>
+</footer>
+</main>
+<script th:src="@{/js/nocturne.js}"></script>
+</body>
+</html>

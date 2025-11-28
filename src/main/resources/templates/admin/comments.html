@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<section class="admin-panel ns-animate-up">
+    <h1>Comments</h1>
+    <table class="table">
+        <thead><tr><th>Author</th><th>Comment</th><th>Approved</th><th>Actions</th></tr></thead>
+        <tbody>
+        <tr th:each="c : ${comments}">
+            <td th:text="${c.authorName}"></td>
+            <td th:text="${c.content}"></td>
+            <td th:text="${c.approved}"></td>
+            <td>
+                <form th:action="@{/admin/comments/{id}/approve(id=${c.id})}" method="post" style="display:inline">
+                    <button class="btn small" type="submit">Approve</button>
+                </form>
+                <form th:action="@{/admin/comments/{id}/reject(id=${c.id})}" method="post" style="display:inline">
+                    <button class="btn small danger" type="submit">Reject</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+</html>

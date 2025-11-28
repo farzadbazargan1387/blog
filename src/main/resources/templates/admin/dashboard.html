@@ -1,0 +1,13 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<h1>Admin Panel</h1>
+<ul>
+    <li><a th:href="@{/admin/posts}">Manage Posts</a></li>
+    <li><a th:href="@{/admin/comments}">Manage Comments</a></li>
+    <li><a th:href="@{/admin/categories}">Manage Categories</a></li>
+    <li><a th:href="@{/admin/tags}">Manage Tags</a></li>
+</ul>
+</body>
+</html>

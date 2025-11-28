@@ -1,0 +1,18 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<h1>Create/Edit Post</h1>
+<form th:action="@{/admin/posts/save}" th:object="${post}" method="post">
+    <input th:field="*{title}" placeholder="Title"/>
+    <input th:field="*{slug}" placeholder="Slug"/>
+    <select th:field="*{status}">
+        <option value="DRAFT">Draft</option>
+        <option value="PUBLISHED">Published</option>
+    </select>
+    <textarea th:field="*{excerpt}" placeholder="Excerpt"></textarea>
+    <textarea th:field="*{content}" placeholder="Content"></textarea>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
