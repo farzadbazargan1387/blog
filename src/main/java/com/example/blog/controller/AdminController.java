@@ -52,14 +52,14 @@ public class AdminController {
             @ModelAttribute Post post,
             @RequestParam(required = false) List<Long> tagIds
     ) {
-        // Set published date if published
+
         if (post.getStatus() == Post.Status.PUBLISHED && post.getPublishedAt() == null) {
             post.setPublishedAt(LocalDateTime.now());
         }
 
         post.setUpdatedAt(LocalDateTime.now());
 
-        // Set category
+
         if (post.getCategory() != null && post.getCategory().getId() != null) {
             categoryRepository.findById(post.getCategory().getId())
                     .ifPresent(post::setCategory);
@@ -67,7 +67,7 @@ public class AdminController {
             post.setCategory(null);
         }
 
-        // Set tags
+
         if (tagIds != null && !tagIds.isEmpty()) {
             HashSet<Tag> tags = new HashSet<>();
             for (Long id : tagIds) {
