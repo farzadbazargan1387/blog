@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PostController {
     private final PostService postService;
     private final CommentService commentService;
+    private final CategoryRepository categoryRepository;
+    private final TagRepository tagRepository;
     private final PostRepository postRepository;
 
     @GetMapping("/{slug}")
@@ -38,10 +40,17 @@ public class PostController {
         c.setAuthorEmail(authorEmail);
         c.setContent(content);
         c.setPost(post);
-        c.setApproved(false); // admin approval required
+        c.setApproved(false);
         commentService.save(c);
         ra.addFlashAttribute("message","Your comment was submitted and is awaiting approval.");
         return "redirect:/posts/" + slug;
+    }
+    @GetMapping("/posts/posts_form")
+    public String newPostForm(Model model){
+        model.addAttribute("post", new Post());
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("tags", tagRepository.findAll());
+        return "admin/post_form";
     }
 
     @GetMapping("/search")

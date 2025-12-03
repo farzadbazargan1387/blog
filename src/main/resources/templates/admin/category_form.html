@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+
+<h1>Category</h1>
+
+<form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <input th:field="*{name}" placeholder="Name" required />
+    <input th:field="*{slug}" placeholder="Slug" required />
+    <textarea th:field="*{description}" placeholder="Description"></textarea>
+
+    <button type="submit">Save</button>
+
+</form>
+
+</body>
+</html>

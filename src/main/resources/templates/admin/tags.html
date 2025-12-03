@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+
+<h1>Manage Tags</h1>
+
+<a th:href="@{/admin/tags/new}" class="btn primary">New Tag</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${tags}">
+        <td th:text="${t.name}"></td>
+        <td th:text="${t.slug}"></td>
+        <td>
+            <a th:href="@{/admin/tags/edit/{id}(id=${t.id})}">Edit</a>
+            <form th:action="@{/admin/tags/delete/{id}(id=${t.id})}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

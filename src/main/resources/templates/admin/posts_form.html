@@ -2,17 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
 <body>
-<h1>Create/Edit Post</h1>
-<form th:action="@{/admin/posts/save}" th:object="${post}" method="post">
-    <input th:field="*{title}" placeholder="Title"/>
-    <input th:field="*{slug}" placeholder="Slug"/>
-    <select th:field="*{status}">
-        <option value="DRAFT">Draft</option>
-        <option value="PUBLISHED">Published</option>
-    </select>
-    <textarea th:field="*{excerpt}" placeholder="Excerpt"></textarea>
-    <textarea th:field="*{content}" placeholder="Content"></textarea>
-    <button type="submit">Save</button>
-</form>
+<div class="admin-container ns-animate-up">
+    <h1>Create / Edit Post</h1>
+    <form th:action="@{/admin/posts/save}" th:object="${post}" method="post">
+        <label>Title</label>
+        <input th:field="*{title}" placeholder="Title" required/>
+
+        <label>Slug</label>
+        <input th:field="*{slug}" placeholder="slug" required/>
+
+        <label>Status</label>
+        <select th:field="*{status}">
+            <option value="DRAFT">Draft</option>
+            <option value="PUBLISHED">Published</option>
+        </select>
+
+        <label>Category</label>
+        <select th:field="*{category.id}">
+            <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}">Category</option>
+        </select>
+
+        <label>Tags (hold ctrl/command to multi-select)</label>
+        <select multiple name="tagIds">
+            <option th:each="t : ${tags}" th:value="${t.id}" th:text="${t.name}"></option>
+        </select>
+
+
+        <label>Excerpt</label>
+        <textarea th:field="*{excerpt}" placeholder="Short excerpt"></textarea>
+
+        <label>Content (HTML allowed)</label>
+        <textarea th:field="*{content}" placeholder="Content"></textarea>
+
+        <button class="btn primary" type="submit">Save</button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
