@@ -2,48 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
 <body>
-<main class="container">
-    <section class="hero ns-animate-up">
-        <h1 class="hero-title">Nocturne Soul — the voice of the night</h1>
-        <p class="hero-sub">Stories about faith, fashion, pain and purpose. Wear your heart on a sleeve.</p>
-    </section>
 
-    <section class="posts-grid ns-animate-up">
-        <div th:if="${posts.content != null}" th:each="p : ${posts.content}">
-            <article class="card">
-                <a th:href="@{/posts/{slug}(slug=${p.slug})}" class="card-link">
-                    <h2 class="card-title" th:text="${p.title}">Post Title</h2>
-                    <p class="card-excerpt" th:text="${p.excerpt}">Post excerpt</p>
-                </a>
-                <div class="card-meta">
-                    <span th:text="${p.author != null ? p.author.fullName : 'Unknown'}">Author</span>
-                    · <time th:text="${p.publishedAt != null ? #dates.format(p.publishedAt,'dd MMM yyyy') : ''}">date</time>
-                </div>
-            </article>
-        </div>
+<section class="hero ns-animate-up">
+    <h1 class="hero-title">Nocturne Soul — the voice of the night</h1>
+    <p class="hero-sub">Stories about faith, fashion, pain and purpose.</p>
+</section>
 
-        <div th:if="${posts.content == null}" th:each="p : ${posts}">
+<section class="posts-grid ns-animate-up">
+    <div th:each="p : ${posts.content}">
+        <article class="card">
+            <a th:href="@{/posts/{slug}(slug=${p.slug})}" class="card-link">
+                <h2 class="card-title" th:text="${p.title}">Title</h2>
+                <p class="card-excerpt" th:text="${p.excerpt}">Excerpt</p>
+            </a>
 
-        </div>
-    </section>
-
-    <aside class="sidebar ns-animate-left">
-        <div class="widget">
-            <h3>Categories</h3>
-            <ul>
-                <li th:each="c : ${categories}"><a th:href="@{|/categories/${c.slug}|}" th:text="${c.name}">Category</a></li>
-            </ul>
-        </div>
-
-        <div class="widget">
-            <h3>Tags</h3>
-            <div class="tag-cloud">
-                <a th:each="t : ${tags}" th:href="@{|/tags/${t.slug}|}" th:text="${t.name}" class="tag">Tag</a>
+            <div class="card-meta">
+                <span th:text="${p.author != null ? p.author.fullName : 'Unknown'}"></span>
+                ·
+                <span th:text="${p.publishedAt != null ? #temporals.format(p.publishedAt, 'dd MMM yyyy') : ''}"></span>
             </div>
+        </article>
+    </div>
+</section>
+
+<aside class="sidebar ns-animate-left">
+
+    <div class="widget">
+        <h3>Categories</h3>
+        <ul>
+            <li th:each="c : ${categories}">
+                <a th:href="@{'/categories/' + ${c.slug}}" th:text="${c.name}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h3>Tags</h3>
+        <div class="tag-cloud">
+            <a th:each="t : ${tags}" th:href="@{'/tags/' + ${t.slug}}" th:text="${t.name}" class="tag"></a>
         </div>
-    </aside>
-</main>
+    </div>
+
+</aside>
 
 <div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

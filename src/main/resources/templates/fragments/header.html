@@ -3,7 +3,7 @@
 <head th:fragment="header">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/nocturne.css}">
     <title>Nocturne Soul</title>
 </head>
 <body>
@@ -25,10 +25,10 @@
         <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')" class="nav-btn">Admin</a>
 
         <span sec:authorize="isAuthenticated()" class="nav-user">
-      Hello, <strong th:text="${#authentication.name}">user</strong>
-      <form th:action="@{/auth/logout}" method="post" style="display:inline">
+       Hello, <strong sec:authentication="name">user</strong>
+    <form th:action="@{/auth/logout}" method="post" style="display:inline">
         <button class="btn small" type="submit">Log out</button>
-      </form>
+    </form></form>
     </span>
     </nav>
 </header>

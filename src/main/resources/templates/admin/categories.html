@@ -1,35 +1,17 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"></head>
-<body>
-
-<h1>Manage Categories</h1>
-
-<a th:href="@{/admin/categories/new}" class="btn primary">New Category</a>
+<h1>Categories</h1>
+<a th:href="@{/admin/categories/new}">New Category</a>
 
 <table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Slug</th>
-        <th>Description</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
+    <tr><th>Name</th><th>Slug</th><th>Actions</th></tr>
+
     <tr th:each="c : ${categories}">
         <td th:text="${c.name}"></td>
         <td th:text="${c.slug}"></td>
-        <td th:text="${c.description}"></td>
         <td>
-            <a th:href="@{/admin/categories/edit/{id}(id=${c.id})}">Edit</a>
-            <form th:action="@{/admin/categories/delete/{id}(id=${c.id})}" method="post" style="display:inline">
-                <button type="submit">Delete</button>
+            <a th:href="@{'/admin/categories/edit/' + ${c.id}}">Edit</a>
+            <form th:action="@{'/admin/categories/delete/' + ${c.id}}" method="post">
+                <button>Delete</button>
             </form>
         </td>
     </tr>
-    </tbody>
 </table>
-
-</body>
-</html>

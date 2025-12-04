@@ -8,40 +8,39 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/admin/tags")
+@RequiredArgsConstructor
 public class TagController {
 
-    private final TagRepository tagRepository;
+    private final TagRepository repo;
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("tags", tagRepository.findAll());
+    public String list(Model model){
+        model.addAttribute("tags", repo.findAll());
         return "admin/tags";
     }
 
     @GetMapping("/new")
-    public String newTag(Model model) {
+    public String createForm(Model model){
         model.addAttribute("tag", new Tag());
         return "admin/tag_form";
     }
 
     @PostMapping("/save")
-    public String saveTag(@ModelAttribute Tag tag) {
-        tagRepository.save(tag);
+    public String save(@ModelAttribute Tag tag){
+        repo.save(tag);
         return "redirect:/admin/tags";
     }
 
     @GetMapping("/edit/{id}")
-    public String editTag(@PathVariable Long id, Model model) {
-        Tag tag = tagRepository.findById(id).orElseThrow();
-        model.addAttribute("tag", tag);
+    public String edit(@PathVariable Long id, Model model){
+        model.addAttribute("tag", repo.findById(id).orElseThrow());
         return "admin/tag_form";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteTag(@PathVariable Long id) {
-        tagRepository.deleteById(id);
+    public String delete(@PathVariable Long id){
+        repo.deleteById(id);
         return "redirect:/admin/tags";
     }
 }

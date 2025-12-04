@@ -1,12 +1,10 @@
 package com.example.blog.controller;
 
-import com.example.blog.model.Comment;
 import com.example.blog.model.Post;
+import com.example.blog.model.Comment;
 import com.example.blog.model.Tag;
-import com.example.blog.repository.CategoryRepository;
-import com.example.blog.repository.CommentRepository;
-import com.example.blog.repository.PostRepository;
-import com.example.blog.repository.TagRepository;
+import com.example.blog.model.Category;
+import com.example.blog.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,20 +24,18 @@ public class AdminController {
     private final TagRepository tagRepository;
     private final CommentRepository commentRepository;
 
-    // -------------------- DASHBOARD --------------------
     @GetMapping
     public String adminIndex() {
         return "admin/dashboard";
     }
 
-    // -------------------- POSTS --------------------
     @GetMapping("/posts")
     public String listPosts(Model model){
         model.addAttribute("posts", postRepository.findAll());
         return "admin/posts";
     }
 
-    @GetMapping("/posts/new")
+    @GetMapping("/posts/posts_form")
     public String newPostForm(Model model){
         model.addAttribute("post", new Post());
         model.addAttribute("categories", categoryRepository.findAll());
@@ -48,10 +44,8 @@ public class AdminController {
     }
 
     @PostMapping("/posts/save")
-    public String savePost(
-            @ModelAttribute Post post,
-            @RequestParam(required = false) List<Long> tagIds
-    ) {
+    public String savePost(@ModelAttribute Post post,
+                           @RequestParam(required = false) List<Long> tagIds) {
 
         if (post.getStatus() == Post.Status.PUBLISHED && post.getPublishedAt() == null) {
             post.setPublishedAt(LocalDateTime.now());
@@ -59,21 +53,19 @@ public class AdminController {
 
         post.setUpdatedAt(LocalDateTime.now());
 
-
+        // CATEGORY
         if (post.getCategory() != null && post.getCategory().getId() != null) {
             categoryRepository.findById(post.getCategory().getId())
                     .ifPresent(post::setCategory);
-        } else {
-            post.setCategory(null);
         }
 
-
+        // TAGS
         if (tagIds != null && !tagIds.isEmpty()) {
-            HashSet<Tag> tags = new HashSet<>();
+            HashSet<Tag> set = new HashSet<>();
             for (Long id : tagIds) {
-                tagRepository.findById(id).ifPresent(tags::add);
+                tagRepository.findById(id).ifPresent(set::add);
             }
-            post.setTags(tags);
+            post.setTags(set);
         } else {
             post.setTags(new HashSet<>());
         }
@@ -82,7 +74,6 @@ public class AdminController {
         return "redirect:/admin/posts";
     }
 
-    // -------------------- COMMENTS --------------------
     @GetMapping("/comments")
     public String listComments(Model model) {
         model.addAttribute("comments", commentRepository.findAll());

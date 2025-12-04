@@ -58,7 +58,7 @@ public class SecurityConfig {
 
         http.formLogin(form -> form
                 .loginPage("/auth/login")
-                .loginProcessingUrl("/auth/login")  // IMPORTANT
+                .loginProcessingUrl("/auth/login")
                 .defaultSuccessUrl("/", true)
                 .permitAll()
         );

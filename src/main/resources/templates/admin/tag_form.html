@@ -1,20 +1,7 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"></head>
-<body>
-
-<h1>Tag</h1>
+<h1>Create / Edit Tag</h1>
 
 <form th:action="@{/admin/tags/save}" th:object="${tag}" method="post">
-
-    <input type="hidden" th:field="*{id}" />
-
-    <input th:field="*{name}" placeholder="Name" required />
-    <input th:field="*{slug}" placeholder="Slug" required />
-
+    <input th:field="*{name}" placeholder="Name">
+    <input th:field="*{slug}" placeholder="Slug">
     <button type="submit">Save</button>
-
 </form>
-
-</body>
-</html>
