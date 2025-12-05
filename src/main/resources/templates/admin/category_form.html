@@ -1,8 +1,22 @@
-<h1>Create / Edit Category</h1>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
 
-<form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
-    <input th:field="*{name}" placeholder="Name">
-    <input th:field="*{slug}" placeholder="Slug">
-    <textarea th:field="*{description}" placeholder="Description"></textarea>
-    <button type="submit">Save</button>
-</form>
+<div class="admin-container ns-animate-up">
+    <h1>Category</h1>
+
+    <form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
+
+        <label>Name</label>
+        <input th:field="*{name}" placeholder="Category name" required>
+
+        <label>Slug</label>
+        <input th:field="*{slug}" placeholder="category-slug" required>
+
+        <button class="btn primary" type="submit">Save</button>
+    </form>
+</div>
+
+</body>
+</html>

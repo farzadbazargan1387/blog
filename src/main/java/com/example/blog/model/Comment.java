@@ -16,11 +16,13 @@ public class Comment {
 
     @Column(columnDefinition="TEXT")
     private String content;
-    private String authorName;
-    private String authorEmail;
+
     private boolean approved = false;
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     private Post post;
+
+    @ManyToOne
+    private User user; // <-- link to logged-in user
 }

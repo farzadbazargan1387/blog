@@ -1,4 +1,6 @@
 <h1>Create / Edit Tag</h1>
+<head th:replace="fragments/header :: header"></head>
+<body>
 
 <form th:action="@{/admin/tags/save}" th:object="${tag}" method="post">
     <input th:field="*{name}" placeholder="Name">

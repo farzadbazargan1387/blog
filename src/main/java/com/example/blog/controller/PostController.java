@@ -3,6 +3,8 @@ import com.example.blog.model.*;
 import com.example.blog.service.*;
 import com.example.blog.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ public class PostController {
     private final CategoryRepository categoryRepository;
     private final TagRepository tagRepository;
     private final PostRepository postRepository;
+    private final UserService userService;
+
+
 
     @GetMapping("/{slug}")
     public String detail(@PathVariable String slug, Model model) {
@@ -27,24 +32,7 @@ public class PostController {
         return "post_detail";
     }
 
-    @PostMapping("/{slug}/comments")
-    public String comment(@PathVariable String slug,
-                          @RequestParam String authorName,
-                          @RequestParam String authorEmail,
-                          @RequestParam String content,
-                          RedirectAttributes ra) {
-        Post post = postService.findBySlug(slug);
-        if(post == null) return "redirect:/";
-        Comment c = new Comment();
-        c.setAuthorName(authorName);
-        c.setAuthorEmail(authorEmail);
-        c.setContent(content);
-        c.setPost(post);
-        c.setApproved(false);
-        commentService.save(c);
-        ra.addFlashAttribute("message","Your comment was submitted and is awaiting approval.");
-        return "redirect:/posts/" + slug;
-    }
+
     @GetMapping("/posts/posts_form")
     public String newPostForm(Model model){
         model.addAttribute("post", new Post());

@@ -8,7 +8,7 @@
         <thead><tr><th>Author</th><th>Comment</th><th>Approved</th><th>Actions</th></tr></thead>
         <tbody>
         <tr th:each="c : ${comments}">
-            <td th:text="${c.authorName}"></td>
+            <td th:text="${c.user != null ? c.user.username : 'Unknown'}"></td>
             <td th:text="${c.content}"></td>
             <td th:text="${c.approved}"></td>
             <td>
@@ -20,9 +20,11 @@
                 </form>
             </td>
         </tr>
+
         </tbody>
     </table>
 </section>
 
 <div th:replace="fragments/footer :: footer"></div>
+</body>
 </html>
